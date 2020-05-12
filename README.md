@@ -2,11 +2,10 @@
 
 Tools for object detection annotations.
 
-* Correct file extensions and convert format into .jpg.
+## Jpeg file extensions and convert format into .jpg. (On Mac. using sips command.)
 
-```
-bash images_corrector.sh
-```
-This convert image and rename file extension into .jpg.
+## Tensorflow to Yolo annotation files converter
 
-.JPG, .jpeg, .png, .gif -> .jpg
+## Yolo to Tensorflow annotation files converter
+
+## Yolo bounding box checker
