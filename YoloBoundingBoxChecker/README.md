@@ -3,5 +3,5 @@
 Tools for object detection annotations.
 
 ```
-bash images_corrector.sh
+python3 yolo_boundingbox_checker.py -i images -l labels -o output -c predefined_classes.txt
 ```
