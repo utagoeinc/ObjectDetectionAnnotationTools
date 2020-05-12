@@ -6,6 +6,6 @@ Tools for object detection annotations.
 
 ## Tensorflow to Yolo annotation files converter
 
-## Yolo to Tensorflow annotation files converter
-
 ## Yolo bounding box checker
+
+## Yolo to Tensorflow annotation files converter

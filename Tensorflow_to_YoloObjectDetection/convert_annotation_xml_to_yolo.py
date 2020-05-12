@@ -22,14 +22,14 @@ def main(args):
         print('No input directory')
         return
 
-    if not os.path.exists(args.classes):
+    if not os.path.exists(args.classes_path):
         print('predefined_classes.txt was not found')
         return
 
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
-    load_classes(args.classes)
+    load_classes(args.classes_path)
     for file_name in os.listdir(args.input_dir):
         txt_string = convert(os.path.join(args.input_dir, file_name))
         file_name_without_suffix = file_name.split('.')[0]
@@ -94,10 +94,10 @@ def convert(file_path):
                         elif val.tag == 'ymax':
                             ymax = int(val.text)
 
-                    x = (xmin + xmax) / (2 * xmax)
-                    y = (ymin + ymax) / (2 * ymax)
-                    w = (xmax - xmin) / xmax
-                    h = (ymax - ymin) / ymax
+                    x = ((xmin + xmax) / 2) / width
+                    y = ((ymin + ymax) / 2) / height
+                    w = (xmax - xmin) / width
+                    h = (ymax - ymin) / height
 
             retval += '{} {} {} {} {}\n'.format(class_id, x, y, w, h)
 
