@@ -23,36 +23,39 @@ def _main(args):
                 labels_path = tmp_path
 
     output_dir = os.path.join(input_dir, 'out')
-    output_labels_dir = os.path.join(output_dir, 'labels')
+    output_labels_dir = os.path.join(output_dir, 'xmls')
     os.makedirs(output_labels_dir, exist_ok=True)
 
     classes = get_classes_list(classes_path)
     save_pbtxt(classes, output_dir)
 
-    for image_file in os.listdir(images_path):
-        image = np.array(Image.open(os.path.join(images_path, image_file)))
-        try:
-            height, width, channels = image.shape
-        except:
-            print('Image file is invalid:' + image_file)
-            continue
+    with open(os.path.join(output_dir, 'list.txt'), 'w') as listtxt:
 
-        basename, _ = os.path.splitext(image_file)
-        boxes = []
+        for image_file in os.listdir(images_path):
+            image = np.array(Image.open(os.path.join(images_path, image_file)))
+            try:
+                height, width, channels = image.shape
+            except:
+                print('Image file is invalid:' + image_file)
+                continue
 
-        with open(os.path.join(labels_path, basename + '.txt'), 'r') as label_file:
-            for line in label_file:
-                tmp_list = line.strip().split(' ')
+            basename, _ = os.path.splitext(image_file)
+            boxes = []
 
-                tmp_list[0] = classes[int(tmp_list[0])]             # class
-                tmp_list[1] = round(float(tmp_list[1]) * width)     # x
-                tmp_list[2] = round(float(tmp_list[2]) * height)    # y
-                tmp_list[3] = round(float(tmp_list[3]) * width)     # w
-                tmp_list[4] = round(float(tmp_list[4]) * height)    # h
+            with open(os.path.join(labels_path, basename + '.txt'), 'r') as label_file:
+                for line in label_file:
+                    tmp_list = line.strip().split(' ')
 
-                boxes.append(tmp_list)
+                    tmp_list[0] = classes[int(tmp_list[0])]             # class
+                    tmp_list[1] = round(float(tmp_list[1]) * width)     # x
+                    tmp_list[2] = round(float(tmp_list[2]) * height)    # y
+                    tmp_list[3] = round(float(tmp_list[3]) * width)     # w
+                    tmp_list[4] = round(float(tmp_list[4]) * height)    # h
 
-        save_xml(image_file, output_labels_dir, height, width, channels, boxes)
+                    boxes.append(tmp_list)
+
+            save_xml(image_file, output_labels_dir, height, width, channels, boxes)
+            listtxt.write(basename+'\r\n')
 
     print('Done!!!')
 
