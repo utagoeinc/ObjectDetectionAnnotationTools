@@ -69,7 +69,7 @@ def save_pbtxt(classes, output_dir):
     with open(os.path.join(output_dir, 'label_map.pbtxt'), 'w') as pbtxt:
         for id, name in enumerate(classes):
             pbtxt.write("item {\n"
-                        + "  id: {}\n".format(id)
+                        + "  id: {}\n".format(id+1)
                         + "  name: '{}'\n".format(name)
                         + "}\n")
 
