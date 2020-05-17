@@ -31,7 +31,11 @@ def _main(args):
 
     for image_file in os.listdir(images_path):
         image = np.array(Image.open(os.path.join(images_path, image_file)))
-        height, width, channels = image.shape
+        try:
+            height, width, channels = image.shape
+        except:
+            print('Image file is invalid:' + image_file)
+            continue
 
         basename, _ = os.path.splitext(image_file)
         boxes = []
